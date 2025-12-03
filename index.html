@@ -18,5 +18,77 @@
       </div>
     </div>
   </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.js" integrity="sha512-yWJavqij8QPQo8FUsoVlxKVIQZkdwISnfP0GsrG8JLa/jPwO0Yw0Y46sHU2pvRdB4hupGkyx+PlqT7Gj/XTEMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js" integrity="sha512-/4gm4oV0m9UvZcF3XEVibY6pCSYqsPqgFMGOV6iqFmjLN/70Fz/ZAEtdXVAMaqPxOSDkK86kbJ7OdUEkyHS6VQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Storytime Library</h1>
+      <p>Cozy, colorful stories written by kids—read together or let the site read aloud.</p>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="actions">
+      <div class="actions__text">
+        <h2>Your Stories</h2>
+        <p>Upload a PDF and a matching audio track to build your own library.</p>
+      </div>
+      <button id="toggle-admin" class="button">Add a new story</button>
+    </section>
+
+    <section id="admin-panel" class="card admin hidden" aria-label="Upload a new story">
+      <form id="story-form" class="form">
+        <div class="form__group">
+          <label for="title">Story title</label>
+          <input id="title" name="title" type="text" required placeholder="e.g. The Moon Picnic" />
+        </div>
+        <div class="form__group">
+          <label for="pdf">Story PDF</label>
+          <input id="pdf" name="pdf" type="file" accept="application/pdf" required />
+        </div>
+        <div class="form__group">
+          <label for="audio">Narration audio</label>
+          <input id="audio" name="audio" type="file" accept="audio/*" required />
+        </div>
+        <button class="button" type="submit">Upload story</button>
+      </form>
+    </section>
+
+    <section>
+      <div id="stories" class="story-grid" aria-live="polite"></div>
+      <p id="empty-state" class="muted">No stories yet. Add one to get started!</p>
+    </section>
+  </main>
+
+  <div id="reader" class="reader hidden" role="dialog" aria-modal="true" aria-labelledby="reader-title">
+    <div class="reader__panel">
+      <header class="reader__header">
+        <div>
+          <p class="eyebrow">Reading</p>
+          <h2 id="reader-title"></h2>
+        </div>
+        <button id="close-reader" class="icon-button" aria-label="Close reader">✕</button>
+      </header>
+
+      <div class="reader__controls">
+        <div class="button-group" role="group" aria-label="Reading mode">
+          <button id="mode-manual" class="button button--ghost active" type="button">Read by myself</button>
+          <button id="mode-auto" class="button button--ghost" type="button">Read to me</button>
+        </div>
+        <div class="reader__pager">
+          <button id="prev-page" class="icon-button" aria-label="Previous page">⟨</button>
+          <span id="page-indicator" class="muted"></span>
+          <button id="next-page" class="icon-button" aria-label="Next page">⟩</button>
+        </div>
+      </div>
+
+      <div id="page-container" class="page-viewer"></div>
+      <audio id="audio-player" preload="metadata"></audio>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
