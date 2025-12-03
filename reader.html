@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storytime Reader</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.js" integrity="sha512-yWJavqij8QPQo8FUsoVlxKVIQZkdwISnfP0GsrG8JLa/jPwO0Yw0Y46sHU2pvRdB4hupGkyx+PlqT7Gj/XTEMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js" integrity="sha512-/4gm4oV0m9UvZcF3XEVibY6pCSYqsPqgFMGOV6iqFmjLN/70Fz/ZAEtdXVAMaqPxOSDkK86kbJ7OdUEkyHS6VQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <p class="eyebrow">Reader</p>
+      <h1>Storytime Library</h1>
+      <p>Browse every story saved in this browser. Choose a book to read yourself or let the site narrate.</p>
+      <div class="hero__actions">
+        <a class="button" href="admin.html">Upload new stories</a>
+        <a class="button button--ghost" href="index.html">Back home</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="actions actions--inline">
+      <div class="actions__text">
+        <h2>Your stories</h2>
+        <p class="muted">Everything saved by the admin page shows up here automatically.</p>
+      </div>
+    </section>
+
+    <section>
+      <div id="stories" class="story-grid" aria-live="polite"></div>
+      <p id="empty-state" class="muted">No stories yet. Visit the admin page to add a PDF and narration.</p>
+    </section>
+  </main>
+
+  <div id="reader" class="reader hidden" role="dialog" aria-modal="true" aria-labelledby="reader-title">
+    <div class="reader__panel">
+      <header class="reader__header">
+        <div>
+          <p class="eyebrow">Reading</p>
+          <h2 id="reader-title"></h2>
+        </div>
+        <button id="close-reader" class="icon-button" aria-label="Close reader">✕</button>
+      </header>
+
+      <div class="reader__controls">
+        <div class="button-group" role="group" aria-label="Reading mode">
+          <button id="mode-manual" class="button button--ghost active" type="button">Read by myself</button>
+          <button id="mode-auto" class="button button--ghost" type="button">Read to me</button>
+        </div>
+        <div class="reader__pager">
+          <button id="prev-page" class="icon-button" aria-label="Previous page">⟨</button>
+          <span id="page-indicator" class="muted"></span>
+          <button id="next-page" class="icon-button" aria-label="Next page">⟩</button>
+        </div>
+      </div>
+
+      <div id="page-container" class="page-viewer"></div>
+      <audio id="audio-player" preload="metadata"></audio>
+    </div>
+  </div>
+
+  <script src="reader.js"></script>
+</body>
+</html>
