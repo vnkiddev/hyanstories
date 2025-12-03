@@ -269,3 +269,40 @@ input[type="file"] {
     align-items: flex-start;
   }
 }
+
+.hero__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.actions--inline {
+  align-items: flex-end;
+}
+
+.landing {
+  background: radial-gradient(circle at 10% 20%, #ffe7de, transparent 30%),
+    radial-gradient(circle at 90% 10%, #f0ecff, transparent 28%), var(--bg);
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+.landing__wrap {
+  max-width: 480px;
+  width: 100%;
+}
+
+.landing__card h1 {
+  font-size: clamp(28px, 5vw, 36px);
+  margin-bottom: 8px;
+}
+
+.landing__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
