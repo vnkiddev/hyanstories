@@ -3,79 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Storytime Library</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Dreamy Page Reader</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.js" integrity="sha512-yWJavqij8QPQo8FUsoVlxKVIQZkdwISnfP0GsrG8JLa/jPwO0Yw0Y46sHU2pvRdB4hupGkyx+PlqT7Gj/XTEMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.js" integrity="sha512-/4gm4oV0m9UvZcF3XEVibY6pCSYqsPqgFMGOV6iqFmjLN/70Fz/ZAEtdXVAMaqPxOSDkK86kbJ7OdUEkyHS6VQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
   <header class="hero">
+    <div class="hero__glow"></div>
     <div class="hero__content">
-      <h1>Storytime Library</h1>
-      <p>Cozy, colorful stories written by kids—read together or let the site read aloud.</p>
+      <p class="hero__eyebrow">Single-page reading mode</p>
+      <h1>World of Dreamy Readers</h1>
+      <p class="hero__tagline">A soft, playful PDF library for kids who love to wander through stories.</p>
     </div>
   </header>
 
-  <main class="page">
-    <section class="actions">
-      <div class="actions__text">
-        <h2>Your Stories</h2>
-        <p>Upload a PDF and a matching audio track to build your own library.</p>
+  <main class="layout">
+    <aside class="library" aria-label="PDF library">
+      <div class="library__header">
+        <h2>Little Library</h2>
+        <p>Pick a book to start wandering. Pages load only when you need them.</p>
       </div>
-      <button id="toggle-admin" class="button">Add a new story</button>
-    </section>
+      <ul id="library-list" class="library__list" aria-live="polite"></ul>
+    </aside>
 
-    <section id="admin-panel" class="card admin hidden" aria-label="Upload a new story">
-      <form id="story-form" class="form">
-        <div class="form__group">
-          <label for="title">Story title</label>
-          <input id="title" name="title" type="text" required placeholder="e.g. The Moon Picnic" />
+    <section class="reader" aria-live="polite">
+      <div class="reader__top">
+        <div class="reader__titles">
+          <p class="reader__eyebrow">Now reading</p>
+          <h2 id="book-title">Select a book to begin</h2>
+          <p id="page-status" class="reader__muted">Pages appear one at a time to keep things light.</p>
         </div>
-        <div class="form__group">
-          <label for="pdf">Story PDF</label>
-          <input id="pdf" name="pdf" type="file" accept="application/pdf" required />
-        </div>
-        <div class="form__group">
-          <label for="audio">Narration audio</label>
-          <input id="audio" name="audio" type="file" accept="audio/*" required />
-        </div>
-        <button class="button" type="submit">Upload story</button>
-      </form>
-    </section>
+        <button id="fullscreen-btn" class="pill-button" aria-label="Toggle fullscreen">Enter Fullscreen</button>
+      </div>
 
-    <section>
-      <div id="stories" class="story-grid" aria-live="polite"></div>
-      <p id="empty-state" class="muted">No stories yet. Add one to get started!</p>
+      <div class="controls" role="group" aria-label="Reader controls">
+        <div class="controls__group">
+          <button id="prev-btn" class="circle-button" aria-label="Previous page" disabled>⟨</button>
+          <div class="page-indicator" aria-live="polite">
+            <span id="page-number">—</span>
+            <span class="slash">/</span>
+            <span id="total-pages">—</span>
+          </div>
+          <button id="next-btn" class="circle-button" aria-label="Next page" disabled>⟩</button>
+        </div>
+
+        <div class="controls__group controls__group--slider">
+          <label for="zoom-slider">Zoom</label>
+          <input id="zoom-slider" type="range" min="0.8" max="1.6" step="0.05" value="1" />
+          <span id="zoom-label" class="reader__muted">100%</span>
+        </div>
+      </div>
+
+      <div id="reader-shell" class="reader__shell">
+        <div id="page-frame" class="page-frame">
+          <canvas id="page-canvas" aria-label="PDF page"></canvas>
+        </div>
+        <p id="helper-text" class="helper">Choose a PDF from the library to load pages on demand.</p>
+      </div>
     </section>
   </main>
 
-  <div id="reader" class="reader hidden" role="dialog" aria-modal="true" aria-labelledby="reader-title">
-    <div class="reader__panel">
-      <header class="reader__header">
-        <div>
-          <p class="eyebrow">Reading</p>
-          <h2 id="reader-title"></h2>
-        </div>
-        <button id="close-reader" class="icon-button" aria-label="Close reader">✕</button>
-      </header>
-
-      <div class="reader__controls">
-        <div class="button-group" role="group" aria-label="Reading mode">
-          <button id="mode-manual" class="button button--ghost active" type="button">Read by myself</button>
-          <button id="mode-auto" class="button button--ghost" type="button">Read to me</button>
-        </div>
-        <div class="reader__pager">
-          <button id="prev-page" class="icon-button" aria-label="Previous page">⟨</button>
-          <span id="page-indicator" class="muted"></span>
-          <button id="next-page" class="icon-button" aria-label="Next page">⟩</button>
-        </div>
-      </div>
-
-      <div id="page-container" class="page-viewer"></div>
-      <audio id="audio-player" preload="metadata"></audio>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
